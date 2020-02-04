@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njxzc.dao.OpinionMapper">
+  <resultMap id="BaseResultMap" type="com.njxzc.model.Opinion">
+    <id column="opinionid" jdbcType="INTEGER" property="opinionid" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="Odate" jdbcType="DATE" property="odate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    opinionid, pid, content, Odate
+  </sql>
+  <select id="selectByExample" parameterType="com.njxzc.model.OpinionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from opinion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from opinion
+    where opinionid = #{opinionid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from opinion
+    where opinionid = #{opinionid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.njxzc.model.OpinionExample">
+    delete from opinion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.njxzc.model.Opinion">
+    insert into opinion (opinionid, pid, content, 
+      Odate)
+    values (#{opinionid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{odate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.njxzc.model.Opinion">
+    insert into opinion
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="opinionid != null">
+        opinionid,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="odate != null">
+        Odate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="opinionid != null">
+        #{opinionid,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="odate != null">
+        #{odate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.njxzc.model.OpinionExample" resultType="java.lang.Long">
+    select count(*) from opinion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update opinion
+    <set>
+      <if test="record.opinionid != null">
+        opinionid = #{record.opinionid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pid != null">
+        pid = #{record.pid,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.odate != null">
+        Odate = #{record.odate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update opinion
+    set opinionid = #{record.opinionid,jdbcType=INTEGER},
+      pid = #{record.pid,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      Odate = #{record.odate,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.njxzc.model.Opinion">
+    update opinion
+    <set>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="odate != null">
+        Odate = #{odate,jdbcType=DATE},
+      </if>
+    </set>
+    where opinionid = #{opinionid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.njxzc.model.Opinion">
+    update opinion
+    set pid = #{pid,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      Odate = #{odate,jdbcType=DATE}
+    where opinionid = #{opinionid,jdbcType=INTEGER}
+  </update>
+</mapper>

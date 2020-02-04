@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.njxzc.dao.TransformationMapper">
+  <resultMap id="BaseResultMap" type="com.njxzc.model.Transformation">
+    <id column="transformid" jdbcType="INTEGER" property="transformid" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="isclasstf" jdbcType="INTEGER" property="isclasstf" />
+    <result column="ismajortf" jdbcType="INTEGER" property="ismajortf" />
+    <result column="classintention" jdbcType="VARCHAR" property="classintention" />
+    <result column="majorintention" jdbcType="VARCHAR" property="majorintention" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    transformid, pid, isclasstf, ismajortf, classintention, majorintention, reason
+  </sql>
+  <select id="selectByExample" parameterType="com.njxzc.model.TransformationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from transformation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from transformation
+    where transformid = #{transformid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from transformation
+    where transformid = #{transformid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.njxzc.model.TransformationExample">
+    delete from transformation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.njxzc.model.Transformation">
+    insert into transformation (transformid, pid, isclasstf, 
+      ismajortf, classintention, majorintention, 
+      reason)
+    values (#{transformid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{isclasstf,jdbcType=INTEGER}, 
+      #{ismajortf,jdbcType=INTEGER}, #{classintention,jdbcType=VARCHAR}, #{majorintention,jdbcType=VARCHAR}, 
+      #{reason,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.njxzc.model.Transformation">
+    insert into transformation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="transformid != null">
+        transformid,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="isclasstf != null">
+        isclasstf,
+      </if>
+      <if test="ismajortf != null">
+        ismajortf,
+      </if>
+      <if test="classintention != null">
+        classintention,
+      </if>
+      <if test="majorintention != null">
+        majorintention,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="transformid != null">
+        #{transformid,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="isclasstf != null">
+        #{isclasstf,jdbcType=INTEGER},
+      </if>
+      <if test="ismajortf != null">
+        #{ismajortf,jdbcType=INTEGER},
+      </if>
+      <if test="classintention != null">
+        #{classintention,jdbcType=VARCHAR},
+      </if>
+      <if test="majorintention != null">
+        #{majorintention,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.njxzc.model.TransformationExample" resultType="java.lang.Long">
+    select count(*) from transformation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update transformation
+    <set>
+      <if test="record.transformid != null">
+        transformid = #{record.transformid,jdbcType=INTEGER},
+      </if>
+      <if test="record.pid != null">
+        pid = #{record.pid,jdbcType=INTEGER},
+      </if>
+      <if test="record.isclasstf != null">
+        isclasstf = #{record.isclasstf,jdbcType=INTEGER},
+      </if>
+      <if test="record.ismajortf != null">
+        ismajortf = #{record.ismajortf,jdbcType=INTEGER},
+      </if>
+      <if test="record.classintention != null">
+        classintention = #{record.classintention,jdbcType=VARCHAR},
+      </if>
+      <if test="record.majorintention != null">
+        majorintention = #{record.majorintention,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reason != null">
+        reason = #{record.reason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update transformation
+    set transformid = #{record.transformid,jdbcType=INTEGER},
+      pid = #{record.pid,jdbcType=INTEGER},
+      isclasstf = #{record.isclasstf,jdbcType=INTEGER},
+      ismajortf = #{record.ismajortf,jdbcType=INTEGER},
+      classintention = #{record.classintention,jdbcType=VARCHAR},
+      majorintention = #{record.majorintention,jdbcType=VARCHAR},
+      reason = #{record.reason,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.njxzc.model.Transformation">
+    update transformation
+    <set>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="isclasstf != null">
+        isclasstf = #{isclasstf,jdbcType=INTEGER},
+      </if>
+      <if test="ismajortf != null">
+        ismajortf = #{ismajortf,jdbcType=INTEGER},
+      </if>
+      <if test="classintention != null">
+        classintention = #{classintention,jdbcType=VARCHAR},
+      </if>
+      <if test="majorintention != null">
+        majorintention = #{majorintention,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null">
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where transformid = #{transformid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.njxzc.model.Transformation">
+    update transformation
+    set pid = #{pid,jdbcType=INTEGER},
+      isclasstf = #{isclasstf,jdbcType=INTEGER},
+      ismajortf = #{ismajortf,jdbcType=INTEGER},
+      classintention = #{classintention,jdbcType=VARCHAR},
+      majorintention = #{majorintention,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR}
+    where transformid = #{transformid,jdbcType=INTEGER}
+  </update>
+</mapper>
